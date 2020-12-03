@@ -1,4 +1,4 @@
-const {BrowserWindow} = require('electron');
+const {BrowserWindow} = require('electronite');
 const path = require('path');
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
