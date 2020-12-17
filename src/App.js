@@ -155,7 +155,7 @@ export const App = () => {
         </label>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", border: '2px solid', margin: '1rem', padding: '0.5rem' }}>
         {editor(showEditor, rclSource, rclTarget, rclLinks, (state) => {
           setEmittedState(state);
         })}
