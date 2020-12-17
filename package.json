@@ -6,10 +6,13 @@
   "homepage": "./",
   "dependencies": {
     "@craco/craco": "^5.6.3",
+    "alignment-editor-rcl": "^0.0.23",
     "electronite": "^7.2.3",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "^3.3.0"
+    "lodash": "^4.17.20",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-scripts": "^3.3.0",
+    "translation-helps-rcl": "^0.10.1"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
