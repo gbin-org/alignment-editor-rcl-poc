@@ -3148,10 +3148,10 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-alignment-editor-rcl@^0.0.26:
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/alignment-editor-rcl/-/alignment-editor-rcl-0.0.26.tgz#6af310e8229b0e39bfb03903ad5bc86064fd311b"
-  integrity sha512-2161v7RygWYmRTlqRHfOuI/acUm/TNPvh3xw3EaCXezh3l1PJuqT+eK/hRP5unPbUZQ7l8jZoPW0BlRdm5Mmzg==
+alignment-editor-rcl@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/alignment-editor-rcl/-/alignment-editor-rcl-0.1.4.tgz#67058e721f88a8117675f51b4fca6b97868cb6bc"
+  integrity sha512-PE1PU2q04jjx4PvdLy2nHIsgxlM49bUJg6mVDgm0BPsF/BIn2RHo1ggbFy6gDQm/2Kn6yWruvDvPrL31NPqgGA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"

@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AlignmentEditor, AlignmentProvider } from "alignment-editor-rcl";
 import "./App.css";
 
 const LINKS_STUB = '[ { "sources": [], "targets": [] } ]';
 
-const editor = (showEditor, source, target, links, stateHook) => {
+const editor = (
+  showEditor,
+  source,
+  reference,
+  target,
+  userLinks,
+  referenceLinks,
+  stateHook
+) => {
   if (showEditor) {
     return (
       <AlignmentProvider>
         <AlignmentEditor
           sourceSegments={source}
+          referenceSegments={reference}
           targetSegments={target}
-          links={links}
+          userLinks={userLinks}
+          referenceLinks={referenceLinks}
           stateUpdatedHook={stateHook}
         />
       </AlignmentProvider>
@@ -26,14 +36,20 @@ export const App = () => {
   const [showEditor, setShowEditor] = useState(false);
 
   const [source, setSource] = useState("");
+  const [reference, setReference] = useState("");
   const [target, setTarget] = useState("");
-  const [links, setLinks] = useState(LINKS_STUB);
+  const [userLinks, setUserLinks] = useState("");
+  const [referenceLinks, setReferenceLinks] = useState("");
 
   const [rclSource, setRclSource] = useState([]);
+  const [rclReference, setRclReference] = useState([]);
   const [rclTarget, setRclTarget] = useState([]);
-  const [rclLinks, setRclLinks] = useState([]);
+  const [rclUserLinks, setRclUserLinks] = useState([]);
+  const [rclReferenceLinks, setRclReferenceLinks] = useState(null);
 
   const [emittedState, setEmittedState] = useState([]);
+
+  useEffect(() => {});
 
   return (
     <div>
@@ -62,16 +78,30 @@ export const App = () => {
               try {
                 setRclSource(
                   source.split(" ").map((word, index) => {
-                    return { text: word, position: index, type: "source" };
-                  })
+                    if (word) {
+                      return { text: word, position: index, type: "source" };
+                    }
+                  }).filter(thing => thing)
                 );
+
+                setRclReference(
+                  reference.split(" ").map((word, index) => {
+                    if (word) {
+                      return { text: word, position: index, type: "reference" };
+                    }
+                  }).filter(thing => thing)
+                );
+
                 setRclTarget(
                   target.split(" ").map((word, index) => {
-                    return { text: word, position: index, type: "target" };
-                  })
+                    if (word) {
+                      return { text: word, position: index, type: "target" };
+                    }
+                  }).filter(thing => thing)
                 );
-                setRclLinks(
-                  JSON.parse(links).map((partialLink) => {
+
+                setRclUserLinks(
+                  JSON.parse(userLinks).map((partialLink) => {
                     return {
                       sources: partialLink.sources,
                       targets: partialLink.targets,
@@ -79,6 +109,19 @@ export const App = () => {
                     };
                   })
                 );
+
+                if (referenceLinks) {
+                  setRclReferenceLinks(
+                    JSON.parse(referenceLinks).map((partialLink) => {
+                      return {
+                        sources: partialLink.sources,
+                        targets: partialLink.targets,
+                        type: "manual",
+                      };
+                    })
+                  );
+                }
+
                 setShowEditor(true);
               } catch (e) {
                 console.error(e);
@@ -91,11 +134,15 @@ export const App = () => {
           <button
             onClick={() => {
               setSource("");
+              setReference("");
               setTarget("");
-              setLinks(LINKS_STUB);
+              setUserLinks("");
+              setReferenceLinks("");
               setRclSource([]);
+              setRclReference([]);
               setRclTarget([]);
-              setRclLinks([]);
+              setRclUserLinks([]);
+              setRclReferenceLinks([]);
               setShowEditor(false);
             }}
           >
@@ -127,6 +174,20 @@ export const App = () => {
           />
         </label>
         <label>
+          Reference Text:
+          <input
+            disabled={showEditor}
+            size="100"
+            type="text"
+            value={reference}
+            placeholder="enter as string"
+            onChange={(e) => {
+              setReference(e.target.value);
+            }}
+          />
+        </label>
+
+        <label>
           Target Text:
           <input
             disabled={showEditor}
@@ -141,24 +202,57 @@ export const App = () => {
         </label>
 
         <label>
-          Links:
+          User Links:
           <input
             disabled={showEditor}
             size="100"
             type="text"
-            value={links}
+            value={userLinks}
             placeholder="enter as array of objects like: [{ sources: [0, 1] targets: [1] }, { sources: [2], targets: [3, 4, 5] }]"
             onChange={(e) => {
-              setLinks(e.target.value);
+              setUserLinks(e.target.value);
+            }}
+          />
+        </label>
+
+        <label>
+          Reference Links:
+          <input
+            disabled={showEditor}
+            size="100"
+            type="text"
+            value={referenceLinks}
+            placeholder="enter as array of objects like: [{ sources: [0, 1] targets: [1] }, { sources: [2], targets: [3, 4, 5] }]"
+            onChange={(e) => {
+              setReferenceLinks(e.target.value);
             }}
           />
         </label>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center", border: '2px solid', margin: '1rem', padding: '0.5rem' }}>
-        {editor(showEditor, rclSource, rclTarget, rclLinks, (state) => {
-          setEmittedState(state);
-        })}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          border: "2px solid",
+          marginTop: "1rem",
+          marginBottom: "1rem",
+          marginLeft: "10rem",
+          marginRight: "10rem",
+          padding: "0.5rem",
+        }}
+      >
+        {editor(
+          showEditor,
+          rclSource,
+          rclReference,
+          rclTarget,
+          rclUserLinks,
+          rclReferenceLinks,
+          (state) => {
+            setEmittedState(state);
+          }
+        )}
       </div>
 
       <div>
