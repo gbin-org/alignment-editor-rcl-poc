@@ -6,7 +6,7 @@
   "homepage": "./",
   "dependencies": {
     "@craco/craco": "^5.6.3",
-    "alignment-editor-rcl": "^0.1.4",
+    "alignment-editor-rcl": "^0.2.1",
     "electronite": "^7.2.3",
     "lodash": "^4.17.20",
     "react": "^16.3.1",

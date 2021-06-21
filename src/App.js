@@ -35,11 +35,11 @@ const editor = (
 export const App = () => {
   const [showEditor, setShowEditor] = useState(false);
 
-  const [source, setSource] = useState("");
-  const [reference, setReference] = useState("");
-  const [target, setTarget] = useState("");
-  const [userLinks, setUserLinks] = useState("");
-  const [referenceLinks, setReferenceLinks] = useState("");
+  const [source, setSource] = useState("A sourcey source of course");
+  const [reference, setReference] = useState("reefy ref refity reef ref");
+  const [target, setTarget] = useState("target targ targ targety");
+  const [userLinks, setUserLinks] = useState("[ {\"sources\": [], \"targets\": [] } ]");
+  const [referenceLinks, setReferenceLinks] = useState("[ {\"sources\": [0, 1], \"targets\": [1, 2] } ]");
 
   const [rclSource, setRclSource] = useState([]);
   const [rclReference, setRclReference] = useState([]);
@@ -77,27 +77,36 @@ export const App = () => {
             onClick={() => {
               try {
                 setRclSource(
-                  source.split(" ").map((word, index) => {
-                    if (word) {
-                      return { text: word, position: index, type: "source" };
-                    }
-                  }).filter(thing => thing)
+                  source
+                    .split(" ")
+                    .map((word) => {
+                      if (word) {
+                        return { text: word };
+                      }
+                    })
+                    .filter((thing) => thing)
                 );
 
                 setRclReference(
-                  reference.split(" ").map((word, index) => {
-                    if (word) {
-                      return { text: word, position: index, type: "reference" };
-                    }
-                  }).filter(thing => thing)
+                  reference
+                    .split(" ")
+                    .map((word) => {
+                      if (word) {
+                        return { text: word };
+                      }
+                    })
+                    .filter((thing) => thing)
                 );
 
                 setRclTarget(
-                  target.split(" ").map((word, index) => {
-                    if (word) {
-                      return { text: word, position: index, type: "target" };
-                    }
-                  }).filter(thing => thing)
+                  target
+                    .split(" ")
+                    .map((word) => {
+                      if (word) {
+                        return { text: word };
+                      }
+                    })
+                    .filter((thing) => thing)
                 );
 
                 setRclUserLinks(
